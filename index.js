@@ -2,10 +2,11 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 
-app.use(express.json())
-
 morgan.token('body', (request) => JSON.stringify(request.body))
 const ownFormat = ':method :url :status :res[content-length] - :response-time ms :body'
+
+app.use(express.json())
+app.use(express.static('dist'))
 app.use(morgan(ownFormat))
 
 let persons = [
