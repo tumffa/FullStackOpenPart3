@@ -42,17 +42,13 @@ app.get('/info', (request, response) => {
       <p>${date}</p>
     `)
   })
+  .catch(error => {next(error)})
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
   const id = request.params.id
   Person.findById(id).then(person => {
-    if (person) {
-      response.json(person)
-    }
-    else {
-      response.status(404).end()
-    }
+    response.json(person)
   })
   .catch(error => {next(error)})
 })
