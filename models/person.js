@@ -19,7 +19,16 @@ const personSchema = new mongoose.Schema({
     required: true,
     minlength: 3
   },
-  number: String,
+  number: {
+    type: String,
+    required: true,
+    validate: {
+      validator: function(num) {
+        return /^\d{2,3}-\d{5,6}$/.test(num)
+      },
+      message: `Number should be 8 digits long and start with 2 or 3 digits followed by a hyphen`
+    }
+  }
 });
 
 personSchema.set('toJSON', {
