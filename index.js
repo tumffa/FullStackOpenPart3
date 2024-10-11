@@ -35,12 +35,12 @@ const errorHandler = (error, request, response, next) => {
 
 app.get('/api/persons', (request, response) => {
   Person.find({})
-  .then(persons => {
-    response.json(persons)
-  })
+    .then(persons => {
+      response.json(persons)
+    })
 })
 
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
   const date = new Date()
   Person.find({}).then(persons => {
     response.send(`
@@ -48,7 +48,7 @@ app.get('/info', (request, response) => {
       <p>${date}</p>
     `)
   })
-  .catch(error => {next(error)})
+    .catch(error => {next(error)})
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -56,16 +56,16 @@ app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(id).then(person => {
     response.json(person)
   })
-  .catch(error => {next(error)})
+    .catch(error => {next(error)})
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
   const id = request.params.id
   Person.findByIdAndDelete(id)
-  .then(result => {
-    response.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(() => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
@@ -107,7 +107,7 @@ app.post('/api/persons', (request, response, next) => {
   person.save().then(savedPerson => {
     response.json(savedPerson)
   })
-  .catch(error => {next(error)})
+    .catch(error => {next(error)})
 })
 
 app.use(errorHandler)

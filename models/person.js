@@ -6,7 +6,7 @@ const url = process.env.MONGODB_URI
 
 console.log('connecting to', url)
 mongoose.connect(url)
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch((error) => {
@@ -26,10 +26,10 @@ const personSchema = new mongoose.Schema({
       validator: function(num) {
         return /^\d{2,3}-\d{5,6}$/.test(num)
       },
-      message: `Number should be 8 digits long and start with 2 or 3 digits followed by a hyphen`
+      message: 'Number should be 8 digits long and start with 2 or 3 digits followed by a hyphen'
     }
   }
-});
+})
 
 personSchema.set('toJSON', {
   transform: (document, returnedObject) => {
